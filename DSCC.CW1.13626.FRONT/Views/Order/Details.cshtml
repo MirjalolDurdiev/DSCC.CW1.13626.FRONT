@@ -1,0 +1,51 @@
+﻿@model DSCC.CW1._13626.FRONT.Models.Order
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2 style="text-align: center;">Order Details</h2>
+
+<div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <h4 style="text-align: center;">Order Information</h4>
+    <hr />
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <td style="padding: 10px; border: 1px solid #ddd;">
+                @Html.DisplayFor(model => model.OrderDate)
+            </td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <td style="padding: 10px; border: 1px solid #ddd;">
+                @Html.DisplayFor(model => model.Amount)
+            </td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <td style="padding: 10px; border: 1px solid #ddd;">
+                @Html.DisplayFor(model => model.Status)
+            </td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <td style="padding: 10px; border: 1px solid #ddd;">
+                @Html.DisplayFor(model => model.CustomerId)
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderId }, new { @class = "btn btn-default", style = "padding: 10px 15px; border: none; border-radius: 4px; background-color: #5bc0de; color: white; cursor: pointer;" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default", style = "padding: 10px 15px; border: none; border-radius: 4px; background-color: #f0f0f0; color: black; margin-left: 10px; text-decoration: none; cursor: pointer;" })
+</div>

@@ -1,53 +1,49 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using DSCC.CW1._13626.FRONT.Models;
-using System.Net;
-using System.Text;
 
 namespace DSCC.CW1._13626.FRONT.Controllers
 {
-    public class CustomerController : Controller
+    public class OrderController : Controller
     {
-            private readonly string baseUrl = "https://localhost:7006/api/Customer";
+        private readonly string baseUrl = "https://localhost:7006/api/Order"; 
 
-            // GET: Customer
-            public async Task<ActionResult> Index()
+        // GET: Order
+        public async Task<ActionResult> Index()
+        {
+            List<Order> orderList = new List<Order>();
+
+            using (var client = new HttpClient())
             {
-                List<Customer> customerList = new List<Customer>();
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                using (var client = new HttpClient())
+                HttpResponseMessage response = await client.GetAsync("");
+
+                if (response.IsSuccessStatusCode)
                 {
-                    client.BaseAddress = new Uri(baseUrl);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    HttpResponseMessage response = await client.GetAsync("");
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseContent = await response.Content.ReadAsStringAsync();
-                        customerList = JsonConvert.DeserializeObject<List<Customer>>(responseContent);
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMessage = "Failed to retrieve Customers";
-                    }
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    orderList = JsonConvert.DeserializeObject<List<Order>>(responseContent);
                 }
-
-                return View(customerList);
+                else
+                {
+                    ViewBag.ErrorMessage = "Failed to retrieve Orders";
+                }
             }
 
+            return View(orderList);
+        }
 
-        // GET: Customer/Details/5
+        // GET: Order/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            Customer customer = null;
+            Order order = null;
 
             using (var client = new HttpClient())
             {
@@ -59,33 +55,33 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    customer = JsonConvert.DeserializeObject<Customer>(responseContent);
+                    order = JsonConvert.DeserializeObject<Order>(responseContent);
                 }
                 else
                 {
-                    return HttpNotFound("Customer not found.");
+                    return HttpNotFound("Order not found.");
                 }
             }
 
-            return View(customer);
+            return View(order);
         }
 
-        // GET: Customer/Create
+        // GET: Order/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: Order/Create
         [HttpPost]
-        public async Task<ActionResult> Create(Customer customer)
+        public async Task<ActionResult> Create(Order order)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var content = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync("", content);
 
                 if (response.IsSuccessStatusCode)
@@ -94,16 +90,16 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Failed to create the customer.";
-                    return View(customer);
+                    ViewBag.ErrorMessage = "Failed to create the order.";
+                    return View(order);
                 }
             }
         }
 
-        // GET: customer/Edit/5
+        // GET: Order/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            Customer customer = null;
+            Order order = null;
 
             using (var client = new HttpClient())
             {
@@ -115,22 +111,22 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    customer = JsonConvert.DeserializeObject<Customer>(responseContent);
+                    order = JsonConvert.DeserializeObject<Order>(responseContent);
                 }
                 else
                 {
-                    return HttpNotFound("Customer not found.");
+                    return HttpNotFound("Order not found.");
                 }
             }
 
-            return View(customer);
+            return View(order);
         }
 
-        // POST: Customer/Edit/5
+        // POST: Order/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, Customer customer)
+        public async Task<ActionResult> Edit(int id, Order order)
         {
-            if (id != customer.CustomerId)
+            if (id != order.OrderId) // Assuming OrderId is the identifier
             {
                 return new HttpStatusCodeResult(400, "ID mismatch between route and body.");
             }
@@ -140,7 +136,7 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var content = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PutAsync($"{baseUrl}/{id}", content);
 
                 if (response.IsSuccessStatusCode)
@@ -149,16 +145,16 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Failed to update the customer.";
-                    return View(customer);
+                    ViewBag.ErrorMessage = "Failed to update the order.";
+                    return View(order);
                 }
             }
         }
 
-        // GET: Customer/Delete/5
+        // GET: Order/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            Customer customer = null;
+            Order order = null;
 
             using (var client = new HttpClient())
             {
@@ -170,18 +166,18 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    customer = JsonConvert.DeserializeObject<Customer>(responseContent);
+                    order = JsonConvert.DeserializeObject<Order>(responseContent);
                 }
                 else
                 {
-                    return HttpNotFound("Customer not found.");
+                    return HttpNotFound("Order not found.");
                 }
             }
 
-            return View(customer);
+            return View(order);
         }
 
-        // POST: Customer/Delete/5
+        // POST: Order/Delete/5
         [HttpPost, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
@@ -198,7 +194,7 @@ namespace DSCC.CW1._13626.FRONT.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Failed to delete the customer.";
+                    ViewBag.ErrorMessage = "Failed to delete the order.";
                     return RedirectToAction("Delete", new { id = id });
                 }
             }

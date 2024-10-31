@@ -1,0 +1,67 @@
+﻿@model DSCC.CW1._13626.FRONT.Models.Order
+
+@{
+    ViewBag.Title = "Edit Order";
+}
+
+<h2 style="text-align: center;">Edit Order</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <h4 style="text-align: center;">Order Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.OrderId)
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                    @Html.LabelFor(model => model.OrderDate)
+                </th>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                    @Html.LabelFor(model => model.Amount)
+                </th>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                    @Html.LabelFor(model => model.Status)
+                </th>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2; text-align: left;">
+                    @Html.LabelFor(model => model.CustomerId)
+                </th>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: right;">
+                    <input type="submit" value="Save" style="padding: 10px 15px; border: none; border-radius: 4px; background-color: #5bc0de; color: white; cursor: pointer;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<div style="text-align: center; margin-top: 20px;">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+</div>

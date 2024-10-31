@@ -17,10 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="https://localhost:44389/Customer/Index" class="navbar-brand" style="font-weight: bold; color: black; font-size: 24px; text-decoration: none;">
+                    Reservation
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li><a href="https://localhost:44389/Customer/Index" style="color: cadetblue;">Customer</a></li>
+                    <li><a href="https://localhost:44389/Order/Index" style="color: cadetblue;">Order</a></li>
                 </ul>
             </div>
         </div>

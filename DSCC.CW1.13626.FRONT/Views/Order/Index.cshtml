@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DSCC.CW1._13626.FRONT.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2 style="text-align: center; font-family: Arial, sans-serif; color: #333;">Order List</h2>
+
+<p style="text-align: right; margin-bottom: 20px;">
+    @Html.ActionLink("Create New Order", "Create", null, new { style = "padding: 8px 12px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;" })
+</p>
+
+<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <thead>
+        <tr style="background-color: #f2f2f2; text-align: left; border-bottom: 2px solid #ddd;">
+            <th style="padding: 12px;">@Html.DisplayNameFor(model => model.OrderDate)</th>
+            <th style="padding: 12px;">@Html.DisplayNameFor(model => model.Amount)</th>
+            <th style="padding: 12px;">@Html.DisplayNameFor(model => model.Status)</th>
+            <th style="padding: 12px;">@Html.DisplayNameFor(model => model.CustomerId)</th>
+            <th style="padding: 12px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;">@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                <td style="padding: 12px;">@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td style="padding: 12px;">@Html.DisplayFor(modelItem => item.Status)</td>
+                <td style="padding: 12px;">@Html.DisplayFor(modelItem => item.CustomerId)</td>
+                <td style="padding: 12px;">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }, new { style = "color: #4CAF50; text-decoration: none; margin-right: 10px;" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { style = "color: #2196F3; text-decoration: none; margin-right: 10px;" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderId }, new { style = "color: #f44336; text-decoration: none;" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
